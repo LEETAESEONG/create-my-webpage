@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  /* p는 montserrat h1은 exo_2 */
+  p {
+    @apply font-montserrat;
+  }
+  h1 {
+    @apply font-exo_2;
+  }
+}

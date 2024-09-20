@@ -15,6 +15,11 @@ const config: Config = {
       lineHeight: {
         "18": "72px",
       },
+      // font 추가
+      fontFamily: {
+        exo_2: "var(--font-exo_2)",
+        montserrat: "var(--font-montserrat)",
+      },
     },
   },
   plugins: [],
