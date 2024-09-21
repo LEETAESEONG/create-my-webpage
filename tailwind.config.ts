@@ -12,9 +12,6 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
-      lineHeight: {
-        "18": "72px",
-      },
       // font 추가
       fontFamily: {
         exo_2: "var(--font-exo_2)",
