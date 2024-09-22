@@ -239,11 +239,9 @@ export type ImageDataType = {
 export async function getRandomImg(): Promise<string> {
   // client 환경에서 env파일의 데이터를 사용하려면 next_public_을 붙여야 한다.
   const ACCESS_KEY = process.env.NEXT_PUBLIC_ACCESS_KEY;
-  console.log(ACCESS_KEY);
   // local storage에 src가 있으면 로컬스토리지 꺼내서 보내기
   // 없으면 요청 보내서 가져오기
   const storageSrc = localStorage.getItem("src");
-  console.log(storageSrc);
   if (storageSrc !== null) {
     return storageSrc;
   }
@@ -263,7 +261,6 @@ export async function getRandomImg(): Promise<string> {
     }
 
     const data: ImageDataType = await response.json();
-    console.log(data);
     localStorage.setItem("src", data.urls.full);
     return data.urls.full;
   } catch (error) {
