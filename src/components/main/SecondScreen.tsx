@@ -87,9 +87,11 @@ export default function SecondScreen() {
             {/* Input field와 오류 메시지를 같은 부모로 묶음 */}
             <input
               type="email"
-              className="relative w-full h-full pl-4 pr-[6.25vh] text-white bg-transparent 
-                      placeholder:text-white placeholder:font-exo_2
-                        z-1 text-[2vh] outline-none border-white border-[1px] rounded-[7px] peer
+              className="relative z-1 w-full h-full pl-4 pr-[6.25vh] 
+                      text-white text-[2vh] 
+                      placeholder:text-white placeholder:font-exo_2 
+                        bg-transparent outline-none border-white border-[1px] rounded-[7px] 
+                        peer
                       focus:valid:border-green-500
                       focus:invalid:border-red-500
                         "
@@ -99,19 +101,21 @@ export default function SecondScreen() {
 
             {/* peer-invalid 클래스 사용: input이 invalid 상태일 때 표시 */}
             <h1
-              className="absolute top-full left-0 px-4 pt-[1vh] w-full text-[2vh] text-[#FF6633] 
-                          invisible peer-focus:peer-invalid:visible"
+              className="absolute top-full left-0 px-4 pt-[1vh] w-full 
+                        text-[2vh] text-[#FF6633] font-light 
+                        invisible peer-focus:peer-invalid:visible"
             >
               Please enter a valid email
             </h1>
 
             {/* 비행기 */}
-            <div className="flex absolute right-0 top-0 z-2 justify-center items-center h-full aspect-square
-                           peer-focus:peer-valid:cursor-pointer peer-focus:peer-invalid:opacity-50">
-              <Image
-                src={plane}
-                alt="비행기"
-              />
+            <div
+              className="absolute z-2 right-0 top-0 h-full aspect-square
+                          flex justify-center items-center 
+                          peer-focus:peer-valid:cursor-pointer 
+                          peer-focus:peer-invalid:opacity-50"
+            >
+              <Image src={plane} alt="비행기" />
             </div>
           </div>
         </div>
