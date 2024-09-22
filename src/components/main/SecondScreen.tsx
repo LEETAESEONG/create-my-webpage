@@ -1,22 +1,45 @@
-// import { getRandomImg } from "@/src/utils/get-random-img";
-
+"use client";
+import { getRandomImg } from "@/src/utils/get-random-img";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import plane from "../../public/input/send_icon.png";
 
 export default function SecondScreen() {
-  // const getRandomImg()
+  const [imgSrc, setImgSrc] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    async function loadImg() {
+      try {
+        const src = await getRandomImg();
+        setImgSrc(src);
+        setLoading(false); // 이미지가 로딩되었을 때 로딩 상태를 false로 설정
+      } catch (error) {
+        console.error("Failed to load image:", error);
+        setLoading(false);
+      }
+    }
+    loadImg();
+  }, []);
+
   return (
-    <div className="relative w-[100vw] h-[100vh] bg-slate-300">
-      <Image
-        // 현재 이미지로 테스트중
-        src="https://images.unsplash.com/photo-1726687676612-c745a9ef9c21?crop=entropy&cs=srgb&fm=jpg&ixid=M3wyNTAyMTR8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjY4OTkxNjh8&ixlib=rb-4.0.3&q=85"
-        alt="background image"
-        className="z-0 object-cover"
-        fill={true}
-        style={{
-          objectFit: "cover",
-        }} // 이미지의 비율을 유지하면서 화면을 채움
-        loading="lazy"
-      />
+    <div className="relative w-full h-[100vh] bg-slate-300">
+      {loading ? (
+        <p>Loading...</p> // 로딩 중일 때 표시
+      ) : (
+        imgSrc && ( // imgSrc가 null 또는 빈 문자열이 아닐 때만 이미지 렌더링
+          <Image
+            src={imgSrc}
+            alt="background image"
+            className="z-0 object-cover"
+            fill={true}
+            style={{
+              objectFit: "cover",
+            }}
+            priority={true} // 중요한 이미지로 우선 로드
+          />
+        )
+      )}
       <div className="absolute size-full bg-black z-1 opacity-50"></div>
       <div className="absolute inset-0 z-2 py-[19vh] px-[4.76vw] flex flex-col justify-between">
         <div className="flex flex-col justify-center items-center">
@@ -54,22 +77,43 @@ export default function SecondScreen() {
             너비: 30vw
         */}
         <div className="flex flex-col justify-center items-center">
-          <h1 className="text-[2vh] text-white mb-[3vh]">
+          <h1 className="text-[2vh] text-white mb-[2vh] font-bold">
             Subscribe to our newsletter
           </h1>
           <div className="relative h-[6.25vh] w-[30vw]">
             {/* Blur 처리할 배경 div */}
-            <div className="absolute inset-0 bg-white opacity-10 blur z-0"></div>
+            <div className="absolute inset-0 bg-white opacity-10 z-0 blur-2.5"></div>
 
-            {/* Input field */}
+            {/* Input field와 오류 메시지를 같은 부모로 묶음 */}
             <input
               type="email"
-              className="relative w-full h-full px-4 text-white bg-transparent z-10 text-[2vh] outline-none border-white border-[1px] rounded-[7px]"
+              className="relative w-full h-full pl-4 pr-[6.25vh] text-white bg-transparent 
+                      placeholder:text-white placeholder:font-exo_2
+                        z-1 text-[2vh] outline-none border-white border-[1px] rounded-[7px] peer
+                      focus:valid:border-green-500
+                      focus:invalid:border-red-500
+                        "
+              required
+              placeholder="Enter your email"
             />
+
+            {/* peer-invalid 클래스 사용: input이 invalid 상태일 때 표시 */}
+            <h1
+              className="absolute top-full left-0 px-4 pt-[1vh] w-full text-[2vh] text-[#FF6633] 
+                          invisible peer-focus:peer-invalid:visible"
+            >
+              Please enter a valid email
+            </h1>
+
+            {/* 비행기 */}
+            <div className="flex absolute right-0 top-0 z-2 justify-center items-center h-full aspect-square
+                           peer-focus:peer-valid:cursor-pointer peer-focus:peer-invalid:opacity-50">
+              <Image
+                src={plane}
+                alt="비행기"
+              />
+            </div>
           </div>
-          <h1 className="px-4 w-[30vw] text-[2vh] text-[#FF6633]">
-            Please enter a valid email
-          </h1>
         </div>
       </div>
     </div>

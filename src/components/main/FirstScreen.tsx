@@ -26,7 +26,7 @@ const profiles = [
 
 export default function FirstScreen() {
   return (
-    <div className="w-[100vw] h-[100vh] px-[4.76vw] flex flex-col justify-center">
+    <div className="w-full h-[100vh] px-[4.76vw] flex flex-col justify-center">
       <div className="pb-[8.75vh]">
         <h1 className="text-[6vh] leading-[9vh] w-[44.6vw]">
           Snap photos and share like <br /> never before

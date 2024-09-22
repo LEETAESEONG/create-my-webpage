@@ -17,6 +17,9 @@ const config: Config = {
         exo_2: "var(--font-exo_2)",
         montserrat: "var(--font-montserrat)",
       },
+      blur: {
+        "2.5": "10px",
+      },
     },
   },
   plugins: [],
