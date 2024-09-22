@@ -9,7 +9,7 @@ export default function SecondScreen() {
       <Image
         // 현재 이미지로 테스트중
         src="https://images.unsplash.com/photo-1726687676612-c745a9ef9c21?crop=entropy&cs=srgb&fm=jpg&ixid=M3wyNTAyMTR8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MjY4OTkxNjh8&ixlib=rb-4.0.3&q=85"
-        alt="ddddd"
+        alt="background image"
         className="z-0 object-cover"
         fill={true}
         style={{
@@ -18,9 +18,9 @@ export default function SecondScreen() {
         loading="lazy"
       />
       <div className="absolute size-full bg-black z-1 opacity-50"></div>
-      <div className="absolute inset-0 z-50 py-[19vh] px-[4.76vw] flex flex-col justify-between">
+      <div className="absolute inset-0 z-2 py-[19vh] px-[4.76vw] flex flex-col justify-between">
         <div className="flex flex-col justify-center items-center">
-          <p className="text-center text-[3vh] font-bold text-white leading-[4.5vh]">
+          <p className="text-center text-[3vh] mb-[3vh] font-bold text-white leading-[4.5vh]">
             Sed ut perspiciatis unde omnis
           </p>
           <p className="text-center text-[2.25vh] text-white opacity-80 leading-[3.75vh]">
@@ -32,6 +32,7 @@ export default function SecondScreen() {
             middle of text. All the Lorem Ipsum generators on the Internet tend
             to repeat predefined chunks as necessary.
           </p>
+          <hr className="my-[4vh] w-full white" />
           <p className="text-center text-[1.75vh] text-white opacity-60 leading-[2.75vh]">
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
             accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
@@ -52,12 +53,23 @@ export default function SecondScreen() {
             높이: 6.25vh
             너비: 30vw
         */}
-        <div>
-          <h1 className="text-[2vh]">Subscribe to our newsletter</h1>
-          <div>
-            <input type="email" className="w-[30vw]" />
+        <div className="flex flex-col justify-center items-center">
+          <h1 className="text-[2vh] text-white mb-[3vh]">
+            Subscribe to our newsletter
+          </h1>
+          <div className="relative h-[6.25vh] w-[30vw]">
+            {/* Blur 처리할 배경 div */}
+            <div className="absolute inset-0 bg-white opacity-10 blur z-0"></div>
+
+            {/* Input field */}
+            <input
+              type="email"
+              className="relative w-full h-full px-4 text-white bg-transparent z-10 text-[2vh] outline-none border-white border-[1px] rounded-[7px]"
+            />
           </div>
-          <h1>Please enter a valid email</h1>
+          <h1 className="px-4 w-[30vw] text-[2vh] text-[#FF6633]">
+            Please enter a valid email
+          </h1>
         </div>
       </div>
     </div>
