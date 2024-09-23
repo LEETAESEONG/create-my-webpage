@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState, useMemo } from "react";
 
 // 문화유산 이미지
 import pica from "../../public/cultures/pica.jpg";
 import sagrada_família from "../../public/cultures/sagrada_família.jpg";
 import fallingwater from "../../public/cultures/fallingwater.jpg";
 import saint_basils_cathedral from "../../public/cultures/saint_basil's_cathedral.jpg";
+import CultureCard from "../cards/CultureCard";
 
 // 타입
 export type culturesType = {
@@ -56,16 +57,24 @@ const cultures = [
 ];
 
 export default function ThirdScreen() {
-  const continents = ["All", "Asia", "Europe", "America", "Oceania"];
-  const centuries = ["1000", "1300", "1700", "2000"];
+  // 컴포넌트 내에서
+  const centuries = useMemo(() => [1000, 1300, 1700, 2000], []); // 빈 배열로 인해 한 번만 계산됨
+  const continents = useMemo(
+    () => ["All", "Asia", "Europe", "America", "Oceania"],
+    []
+  ); // 빈 배열로 인해 한 번만 계산됨
+  const [currentCountries, setCurrentCountries] = useState(cultures);
   const [pickContinent, setPickContinent] = useState<number>(0);
   const [pickCentury, setPickCentury] = useState<boolean[]>(
     Array.from({ length: 4 }, () => true)
   );
   const [pickCount, setPickCount] = useState<number>(0);
+
+  // 국가 선택 함수
   const clickContinent = (index: number) => {
     setPickContinent(index);
   };
+  // 건설 년도 선택 함수
   const clickCentury = (index: number) => {
     // 이미 선택된 상자를 클릭했을 경우 : 초기화
     if (pickCentury[index]) {
@@ -118,6 +127,36 @@ export default function ThirdScreen() {
       }
     }
   };
+  // 필터로 걸러주는 함수
+  const checkValid = useCallback(() => {
+    let minCen = 10000;
+    let maxCen = 0;
+
+    // pickCentury 배열에서 선택된 세기의 최소, 최대값을 찾습니다.
+    for (let i = 0; i < 4; i++) {
+      if (pickCentury[i]) {
+        minCen = Math.min(minCen, centuries[i]);
+        maxCen = Math.max(maxCen, centuries[i]);
+      }
+    }
+
+    const currentCon = continents[pickContinent];
+
+    const newCultures = cultures.filter((e) => {
+      return (
+        minCen <= e.year &&
+        e.year <= maxCen &&
+        (currentCon === "All" || e.continent === currentCon)
+      );
+    });
+
+    setCurrentCountries(newCultures);
+  }, [pickContinent, pickCentury, centuries, continents]);
+
+  useEffect(() => {
+    checkValid();
+  }, [checkValid]); // checkValid 의존성에 추가
+
   return (
     <div className="w-full h-[100vh] px-[4.76vw] pt-[15vh] pb-[10vh]">
       <h1 className="mb-[4vh] text-[6vh] leading-[72px]">
@@ -184,7 +223,29 @@ export default function ThirdScreen() {
         </div>
       </div>
       {/* 슬라이더 */}
-      <div></div>
+      <div className="flex gap-10">
+        {currentCountries.length > 0 ? (
+          currentCountries.map((e) => {
+            return (
+              <CultureCard
+                key={e.name}
+                name={e.name}
+                year={e.year}
+                continent={e.continent}
+                content={e.content}
+                country={e.country}
+                img={e.img.src}
+              />
+            );
+          })
+        ) : (
+          <div className="w-full h-[52vh] flex justify-center items-center">
+            <h1 className="font-bold text-[4vh]">
+              There are no items matching the conditions.
+            </h1>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

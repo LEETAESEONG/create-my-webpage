@@ -32,7 +32,7 @@ export default function SecondScreen() {
             src={imgSrc}
             alt="background image"
             className="z-0 object-cover"
-            fill={true}
+            fill
             style={{
               objectFit: "cover",
             }}
